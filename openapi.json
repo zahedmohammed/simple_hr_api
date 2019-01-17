@@ -1,0 +1,162 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Simple HR API",
+    "description" : "This is a simple API to demonstrate the get and post methods",
+    "contact" : {
+      "email" : "123@xyz.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/MyOwnOrganization2/simple_hr_api/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "paths" : {
+    "/employees" : {
+      "get" : {
+        "description" : "To get the details of all employees",
+        "parameters" : [ {
+          "name" : "bodySize",
+          "in" : "query",
+          "description" : "To limit the body size",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 20,
+            "minimum" : 10,
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 15
+          }
+        }, {
+          "name" : "pageLimit",
+          "in" : "query",
+          "description" : "To limit the number of pages",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "properties" : {
+                      "id" : {
+                        "type" : "integer",
+                        "format" : "int32",
+                        "example" : 25
+                      },
+                      "emp_name" : {
+                        "type" : "string",
+                        "example" : "Shekar"
+                      },
+                      "emp_status" : {
+                        "type" : "string",
+                        "example" : "Tech HR"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "description" : "Enter a new HR details",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Employee_obj"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully created an emlpoyee"
+          },
+          "400" : {
+            "description" : "Failed To Enter into DB"
+          }
+        }
+      }
+    },
+    "/employee/{id}" : {
+      "get" : {
+        "description" : "getting info on specific employee",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "description" : "Id of the employee",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Succesfully Fetched",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Employee_array"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Employee_obj" : {
+        "$ref" : "#/components/schemas/Employee_obj"
+      },
+      "Employee_array" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Employee"
+        }
+      },
+      "Employee" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 25
+          },
+          "emp_name" : {
+            "type" : "string",
+            "example" : "Shekar"
+          },
+          "emp_status" : {
+            "type" : "string",
+            "example" : "Tech HR"
+          }
+        }
+      }
+    }
+  }
+}
